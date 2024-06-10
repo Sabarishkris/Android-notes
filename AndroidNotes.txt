@@ -1,0 +1,197 @@
+1) resource (User view)
+2) Business Logic
+3) Gradle 
+
+9/05/24
+1)app design 
+2)code must follow pattern 
+3)user experience 
+->Once check all google apps
+->Refer material.com (design guidelines)
+->Style guidelines 
+------------------------------------------------------------------------------------------------------------------------
+
+Gradle ? 
+->human heart as like android gradle
+->app library ellam erukum (dependency)
+->app build version 
+->default app id,sdk version
+->gradle vachu tha project build panuvaga (with use of internet)
+->written in java 
+->handle with (kotlin/groovy)
+->android projectta build panuvaga nama projectku theva para dependency 
+ya add pannanum (nama add pana aprm namaku thevayana file avaga repositoryla illana netla erunthu download panuvaga)
+ -------------------------------------------------------------------------------------------------------------------------
+Manifest? 
+-> human as like brain at same androidku manifest
+-> manifest means app details (icon,app display name,icon shape,rtl (oppositeta change agum mostly abrabic languagela use panuvaga),
+theme (actionbar color bla bla)
+->activity ->first enna varanum
+->ellam activityum register panirukanum apidi illana app crach agum(activity not found exception)
+->permission(network,camera….)
+------------------------------------------------------------------------------------------------------------------------------
+Resource file 
+
+Drawable
+->customize design(button design,gradient color set panikalam,vector image)
+
+Layout -UI
+->User interface 
+
+Mipmap
+->app use panra ellam images ellam ethula erukum (oru image 5 type of sizela vachurupom mobile size veri agum pothu athuva set aaigurum same namela vachurupom)
+
+Values
+->Color (applicational use panra ellam colorum erukum)
+->String( app la use panra ellam stringum ethula potu vachuta ethulayee mathikalam)
+-> Style(text box ,action bar,ellam styleum ethula potuvachukalam)
+----------------------------------------------------------------------------------------------------------------------------------
+Static (static illa but static panra workka 3 wayla achieve panalam)
+->companion object
+->package level
+->object local
+------------------------------------------------------------------------------------------------------------------------------------
+Databinding & view model
+ dataBinding { enable=true }
+ buildFeatures{dataBinding=true}
+ viewBinding { enable=true }
+
+ val lifecycle_version = "2.7.0"
+    val arch_version = "2.2.0"
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    // ViewModel utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+    // Lifecycle utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycle_version")
+
+    // Saved state module for ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
+-------------------------------------------------------------------------------------------------------------------------------------
+Navigation
+
+  // Navigation components
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.4.0")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.4.0")
+    implementation("com.google.android.material:material:1.12.0")
+------------------------------------------------------------------------------------------------------------------------------------
+Safe args
+
+project level
+  buildscript {
+    repositories {
+        google()
+        // Add any other repositories as needed
+    }
+    dependencies {
+        classpath ("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.7")
+
+    }
+}
+
+Dependency (navigation,roomdb,safeargs)------
+
+    implementation(libs.androidx.junit)
+    testImplementation("junit:junit:4.12")
+    androidTestImplementation("org.testng:testng:6.9.6")
+    androidTestImplementation("junit:junit:4.12")
+    val nav_version = "2.7.7"
+
+    // Java language implementation
+    implementation("androidx.navigation:navigation-fragment:$nav_version")
+    implementation("androidx.navigation:navigation-ui:$nav_version")
+
+    // Kotlin
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+    // Feature module Support
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+    implementation ("com.google.android.material:material:1.5.0")
+
+    val room_version = "2.6.1"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+
+app level
+
+plugin (first)
+
+   id("kotlin-kapt")
+    id("androidx.navigation.safeargs.kotlin")
+-----------------------------------------------------------------------------------------------------------------------------------------
+Action bar
+(add style)
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/design_default_color_primary</item>
+        <item name="colorPrimaryDark">@color/design_default_color_primary_dark</item>
+        <item name="colorAccent">@color/white</item>
+    </style>
+----------------------------------------
+
+Another way ->
+
+<androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="10dp"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+Back button->
+ val toolbar = binding.toolbar
+        setSupportActionBar(toolbar)
+
+        val navController = findNavController(R.id.fragmentContainerView)
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
+override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.fragmentContainerView)
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+change -> fragment container to fragment ->  <fragment/>
+
+
+</resources>
+-----------------------------------------------------------------------------------------------------------------------------------------
+Room database
+  implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+-----------------------------------------------------------------------------------------------------------------------------------------
+Gif
+implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.23")
+-------------------------------------------------------------------------------------------------------------------------------------------------
+All dependency 
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+material theme website
+https://material-foundation.github.io/material-theme-builder/
+---------------------------------------------------------------------------------------------------------------------------------------------
+Bottom navigation 
+create ->menu
+xml-><com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_navigation"/>
+main code ->
+        binding.bottomNav.setupWithNavController(navController)
+---------------------------------------------------------------------------------------------------------------------------
+DrawerLayout 
+
+
